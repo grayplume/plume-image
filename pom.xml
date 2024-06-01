@@ -26,6 +26,12 @@
             <version>5.8.25</version>
         </dependency>
 
+        <!--thymeleaf启动器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
