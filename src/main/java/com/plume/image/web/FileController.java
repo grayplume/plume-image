@@ -1,5 +1,6 @@
 package com.plume.image.web;
 
+import com.plume.image.annotation.OperationLog;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ public class FileController {
     private String uploadDir;
 
     @GetMapping("/")
+    @OperationLog(moudle = "图床",operator = "访问上传首页")
     public String index(Model model) throws IOException {
         List<String> uploadedFiles = getUploadedFiles();
         model.addAttribute("uploadedFiles", uploadedFiles);
@@ -32,6 +34,7 @@ public class FileController {
     }
 
     @GetMapping("/preview/random")
+    @OperationLog(moudle = "图床",operator = "随机获取图片")
     public ResponseEntity<byte[]> previewRandomImage() throws IOException {
         List<Path> imagePaths = Files.list(Paths.get(uploadDir))
                 .filter(Files::isRegularFile)
@@ -58,6 +61,7 @@ public class FileController {
 
 
     @GetMapping("/preview/{fileName}")
+    @OperationLog(moudle = "图床",operator = "首页预览")
     public ResponseEntity<byte[]> previewImage(@PathVariable("fileName") String fileName) throws IOException {
         Path imagePath = Paths.get(uploadDir + fileName);
         byte[] imageBytes = Files.readAllBytes(imagePath);
@@ -69,6 +73,7 @@ public class FileController {
 
 
     @PostMapping("/upload")
+    @OperationLog(moudle = "图床",operator = "上传图片")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
             byte[] bytes = file.getBytes();
@@ -79,6 +84,7 @@ public class FileController {
     }
 
     @GetMapping("/delete/{fileName}")
+    @OperationLog(moudle = "图床",operator = "删除图片")
     public String deleteFile(@PathVariable("fileName") String fileName) throws IOException {
         Path path = Paths.get(uploadDir + fileName);
         Files.deleteIfExists(path);
