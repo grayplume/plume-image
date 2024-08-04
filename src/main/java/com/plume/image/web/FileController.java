@@ -65,6 +65,7 @@ public class FileController {
     public ResponseEntity<byte[]> previewImage(@PathVariable("fileName") String fileName) throws IOException {
         Path imagePath = Paths.get(uploadDir + fileName);
         byte[] imageBytes = Files.readAllBytes(imagePath);
+        // int i = 1/0;
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(imageBytes);

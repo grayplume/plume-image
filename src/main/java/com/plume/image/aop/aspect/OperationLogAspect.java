@@ -38,6 +38,12 @@ public class OperationLogAspect {
 
         return result;
     }
+    @AfterThrowing(pointcut ="@annotation(operationLog)",throwing = "e")
+    public void doAfterThrowing(JoinPoint joinPoint,OperationLog operationLog,Exception e){
+        log.error("异常请求为:{}:{}",operationLog.moudle(),operationLog.operator());
+        log.error("异常信息:{}",e.getMessage());
+    }
+
 
     private void recordLog(ProceedingJoinPoint joinPoint,long time){
         MethodSignature signature = (MethodSignature)joinPoint.getSignature();

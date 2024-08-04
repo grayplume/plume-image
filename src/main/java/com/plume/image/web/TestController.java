@@ -14,6 +14,7 @@ public class TestController {
     @OperationLog(moudle = "test",operator = "测试")
     public String hello(Model model){
         model.addAttribute("hello", "hello welcome");
+        int i = 1/0;
         return "upload";
     }
 }
